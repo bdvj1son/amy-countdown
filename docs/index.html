@@ -351,7 +351,7 @@ body{
     </section>
   </div>
 
-  <section class="card">
+  <section class="card" id="stripCard">
     <p class="eyebrow">Next two weeks</p>
     <div class="strip" id="strip"></div>
     <div class="legend">
@@ -570,15 +570,40 @@ body{
     $("fulldate").textContent = MONS[now.getMonth()] + " " + now.getDate() + ", " + now.getFullYear();
     $("clock").textContent    = fmtClock(now);
 
-    /* Past the end of the schedule */
+    /* Past the end of the schedule — every card has to be given its
+       finished state, or it keeps whatever the previous tick rendered. */
     if(t >= N){
-      $("nowCard").className = "now is-free";
-      $("orb").innerHTML = heartSVG("var(--sage)");
-      $("nowHead").textContent = "The schedule's done";
-      $("nowSub").textContent  = "Every shift on this calendar is behind her.";
+      $("nowCard").className   = "now is-free";
+      $("orb").innerHTML       = heartSVG("var(--sage)");
       $("nowLabel").textContent = "Right now";
+      $("nowHead").textContent = "The schedule's done";
+      $("nowSub").textContent  = "Every shift on this calendar is behind you.";
+
+      $("blockName").textContent  = "All blocks done";
+      $("blockDates").textContent = "8/30/26 – 6/11/27";
+      $("blockLeft").innerHTML    = "Every rotation on this calendar is behind you.";
+      setRing(100);
+
+      $("offCard").className    = "count free";
+      $("offTitle").textContent = "Days off";
+      $("offWhen").textContent  = "";
+      $("offDigits").innerHTML  = '<span class="digit-group"><span class="n">&#8734;</span></span>';
+      $("offNote").textContent  = "Free from here on.";
+
+      $("vacCard").className    = "count vacay";
+      $("vacTitle").textContent = "Next vacation";
+      $("vacWhen").textContent  = "";
+      $("vacDigits").innerHTML  = '<span class="digit-group"><span class="n">&mdash;</span></span>';
+      $("vacNote").textContent  = "No vacation left on this schedule.";
+
+      $("stripCard").style.display = "none";
+      ["tBlockDay","tBlockNight","tWkDay","tWkNight","tAll"].forEach(function(id){
+        $(id).textContent = "0";
+      });
+      $("foot").textContent = "Schedule complete · 8/30/26 – 6/13/27";
       return;
     }
+    $("stripCard").style.display = "";
     if(t < 0) t = 0;
 
     var act  = activeShift(now);
@@ -605,7 +630,7 @@ body{
       var onVac = cur.shift === "Vacation";
       orb.innerHTML = sleeping ? moonSVG("var(--peri)") : heartSVG("var(--sage)");
       $("nowLabel").textContent = sleeping ? "Between nights" : "Right now";
-      $("nowHead").textContent  = sleeping ? "Sleeping it off"
+      $("nowHead").textContent  = sleeping ? "Rest up"
                                 : onVac    ? "On vacation"
                                 : cur.shift === "Conference" ? "At a conference"
                                 : "Off duty";
@@ -645,7 +670,7 @@ body{
       /* Past the last block */
       $("blockName").textContent  = "All blocks done";
       $("blockDates").textContent = "8/30/26 – 6/11/27";
-      $("blockLeft").innerHTML    = "Every rotation on this calendar is behind her.";
+      $("blockLeft").innerHTML    = "Every rotation on this calendar is behind you.";
       setRing(100);
     }
 
@@ -671,14 +696,14 @@ body{
         $("offDigits").innerHTML  = nx2 < 0 ? '<span class="digit-group"><span class="n">∞</span></span>'
                                             : digitsHTML(shiftStart(nx2) - now);
         $("offNote").textContent  = nx2 < 0 ? "Free from here on."
-          : "of freedom left before " + (rec(nx2).time === "Night" ? "nights" : "her next shift") + ".";
+          : "of freedom left before " + (rec(nx2).time === "Night" ? "nights" : "your next shift") + ".";
       } else {
         offCard.className = "count";
         $("offTitle").textContent = nightOnly ? "Next night off" : "Next day off";
         $("offDigits").innerHTML  = digitsHTML(free - now);
         $("offNote").textContent  = nightOnly
-          ? "Walks out " + fmtClock(free) + " — she stays on nights, so it's the evening that's really hers."
-          : "Walks out " + fmtMed(free) + " at " + fmtClock(free) + ".";
+          ? "You're out at " + fmtClock(free) + " — still on nights, so it's the evening that's really yours."
+          : "You're out " + fmtMed(free) + " at " + fmtClock(free) + ".";
       }
     }
 
