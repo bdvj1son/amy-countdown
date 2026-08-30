@@ -498,33 +498,47 @@ body{
      Single days worth celebrating. Keyed M/D/YY. */
   var EVENTS = {
     "9/12/26":  { emoji:"🍣", title:"Happy birthday, Amy!",
-                  note:"Fancy sushi tonight — and it lands on the one night you're off all week." },
+                  detail:"Make 31 a good 1!",
+                  note:"Sushi Sho tonight, bring an appetite!" },
     "9/23/26":  { emoji:"✉️", title:"Match Day!",
-                  note:"Fellowship results today. Whatever it says, it's a night shift after — so celebrate at breakfast." },
+                  detail:"Email at noon",
+                  note:"Fellowship results at noon. Be proud of yourself, and fingers crossed!" },
     "10/31/26": { emoji:"🎃", title:"Happy Halloween!",
-                  note:"NS weekend, six to six. The candy will keep." },
+                  detail:"Your least favorite holiday",
+                  note:"Of all the holidays to work, this is certainly one that you don't care about!" },
     "11/3/26":  { emoji:"🗳️", title:"Election Day!",
+                  detail:"2026 Midterms",
                   note:"You're out at 6pm. Vote on the way home." },
     "11/26/26": { emoji:"🦃", title:"Happy Thanksgiving!",
-                  note:"And it's a real day off." },
+                  detail:"Off from work!",
+                  note:"A real day off for the best holiday. Lots of food, and lots of traffic." },
     "12/24/26": { emoji:"🎄", title:"Merry Christmas Eve!",
-                  note:"On nights, but the tree will still be there in the morning." },
+                  detail:"Overnight at North Shore",
+                  note:"The tree will be waiting for you when you come home in the morning!" },
     "12/25/26": { emoji:"🎁", title:"Merry Christmas!",
-                  note:"Nights again. We'll do Christmas properly whenever you wake up." },
+                  detail:"Overnight at North Shore",
+                  note:"Christmas is not a time nor a season, but a state of mind. Also, Christmas is leftovers!" },
     "12/31/26": { emoji:"🥂", title:"Happy New Year's Eve!",
-                  note:"You'll be at work for midnight. Saving you a toast." },
+                  detail:"Overnight at North Shore",
+                  note:"Well, you'll definitely be awake for the ball drop! Try to catch the New Year's baby!" },
     "1/1/27":   { emoji:"🎊", title:"Happy New Year!",
-                  note:"The last night float shift on the whole calendar. You walk out of 2026 and off nights." },
+                  detail:"Overnight at North Shore",
+                  note:"New year, new you. Last night float block on the whole calendar!" },
     "1/22/27":  { emoji:"💍", title:"Happy 3rd anniversary!",
-                  note:"Three years. Right in the middle of the staycation." },
+                  detail:"♥︎♥︎♥︎",
+                  note:"Here's to many, many more. With love, from Yoon." },
     "2/1/27":   { emoji:"🐩", title:"Westminster Dog Show!",
-                  note:"The 151st, and we have tickets. Out at 6pm — go straight there." },
+                  detail:"Hound, Toy, Non-Sporting, Herding",
+                  note:"Doors at 6:30, show at 7:30, let's get out on time today!" },
     "2/14/27":  { emoji:"💕", title:"Happy Valentine's Day!",
-                  note:"Off today, but you come off a night shift at 6am and you're back Monday. Sleep first, dinner after." },
+                  detail:"♡♡♡",
+                  note:"Sleep first, dinner after. Excited for date night!" },
     "4/20/27":  { emoji:"🎂", title:"Happy birthday, Gus!",
-                  note:"Give the birthday dog a scratch from us." },
+                  detail:"His 11th birthday",
+                  note:"He's just a little boy!" },
     "6/11/27":  { emoji:"🎉", title:"Last day of residency!",
-                  note:"The final shift on the whole calendar. Out at 6pm, and then it's done." }
+                  detail:"One final ONC shift",
+                  note:"The final shift on the whole calendar. Out at 6pm, and then IT'S OVER!" }
   };
 
   /* Multi-day trips. Keyed by first and last day, M/D/YY. */
@@ -597,7 +611,7 @@ body{
       i = +i;
       if(i >= t) out.push({ idx:i, emoji:EVENT_AT[i].emoji,
                             name:EVENT_AT[i].title.replace(/!$/, ""),
-                            detail:"" });
+                            detail:EVENT_AT[i].detail || "" });
     }
     for(j = 0; j < TRIPS.length; j++){
       if(TRIPS[j].endIdx >= t){
