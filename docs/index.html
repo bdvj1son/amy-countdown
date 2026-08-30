@@ -285,6 +285,11 @@ body{
 .up-body{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:1px;}
 .up-name{font-size:14px;font-weight:600;line-height:1.25;}
 .up-detail{font-size:12px;color:var(--ink-soft);line-height:1.3;}
+/* A detail that is nothing but hearts is a flourish, not a caption -
+   at caption size and colour it reads like a rendering fault. */
+.up-detail.hearts{
+  font-size:15px;color:var(--rose);letter-spacing:.14em;line-height:1.1;
+}
 .up-when{
   flex:0 0 auto;text-align:right;white-space:nowrap;
   font-size:12px;color:var(--ink-faint);font-variant-numeric:tabular-nums;
@@ -518,13 +523,13 @@ body{
   var EVENTS = {
     "9/12/26":  { emoji:"🍣", title:"Happy birthday, Amy!",
                   detail:"Make 31 a good 1!",
-                  note:"Sushi Sho tonight, bring an appetite!" },
+                  note:"Sushi Sho tonight — bring an appetite!" },
     "9/23/26":  { emoji:"✉️", title:"Match Day!",
                   detail:"Email at noon",
-                  note:"Fellowship results at noon. Be proud of yourself, and fingers crossed!" },
+                  note:"Fellowship results today. Be proud of yourself, and fingers crossed!" },
     "10/31/26": { emoji:"🎃", title:"Happy Halloween!",
                   detail:"Your least favorite holiday",
-                  note:"Of all the holidays to work, this is certainly one that you don't care about!" },
+                  note:"Of all the holidays to work, at least it's this one." },
     "11/3/26":  { emoji:"🗳️", title:"Election Day!",
                   detail:"2026 Midterms",
                   note:"You're out at 6pm. Vote on the way home." },
@@ -548,9 +553,9 @@ body{
                   note:"Here's to many, many more. With love, from Yoon." },
     "2/1/27":   { emoji:"🐩", title:"Westminster Dog Show!",
                   detail:"Hound, Toy, Non-Sporting, Herding",
-                  note:"Doors at 6:30, show at 7:30, let's get out on time today!" },
+                  note:"Doors at 6:30, show at 7:30 — let's get out on time today!" },
     "2/14/27":  { emoji:"💕", title:"Happy Valentine's Day!",
-                  detail:"♡♡♡",
+                  detail:"♥︎♥︎♥︎",
                   note:"Sleep first, dinner after. Excited for date night!" },
     "4/20/27":  { emoji:"🎂", title:"Happy birthday, Gus!",
                   detail:"His 11th birthday",
@@ -569,8 +574,11 @@ body{
     { start:"1/16/27",  end:"1/24/27",  emoji:"🏡",
       name:"Staycation",            detail:"3rd anniversary on the 22nd" },
     { start:"3/26/27",  end:"4/4/27",   emoji:"🗾",
-      name:"Osaka, Japan",          detail:"Ten days" }
+      name:"Osaka, Japan",          detail:"Ten days in food heaven" }
   ];
+
+  /* Heart suits, plus the text-presentation selector and spaces */
+  var HEARTS_ONLY = /^[♥♡❤︎️\s]+$/;
 
   var START = new Date(2026, 7, 30, 0, 0, 0, 0);   // Aug 30 2026
   var N = SEQ.length;
@@ -988,7 +996,8 @@ body{
       upHTML += '<div class="up">' +
         '<span class="up-emoji">' + m.emoji + '</span>' +
         '<span class="up-body"><span class="up-name">' + m.name + '</span>' +
-        (m.detail ? '<span class="up-detail">' + m.detail + '</span>' : '') +
+        (m.detail ? '<span class="up-detail' + (HEARTS_ONLY.test(m.detail) ? " hearts" : "") +
+                    '">' + m.detail + '</span>' : '') +
         '</span>' +
         '<span class="up-when"><b>' + whenBig + '</b>' + whenSmall + '</span>' +
       '</div>';
