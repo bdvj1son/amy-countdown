@@ -520,6 +520,10 @@ body{
                   note:"Fancy sushi tonight — and it lands on the one night you're off all week." },
     "9/23/26":  { emoji:"✉️", title:"Match Day!",
                   note:"Fellowship results today. Whatever it says, it's a night shift after — so celebrate at breakfast." },
+    "10/31/26": { emoji:"🎃", title:"Happy Halloween!",
+                  note:"NS weekend, six to six. The candy will keep." },
+    "11/3/26":  { emoji:"🗳️", title:"Election Day!",
+                  note:"You're out at 6pm. Vote on the way home." },
     "11/26/26": { emoji:"🦃", title:"Happy Thanksgiving!",
                   note:"And it's a real day off." },
     "12/24/26": { emoji:"🎄", title:"Merry Christmas Eve!",
@@ -532,6 +536,12 @@ body{
                   note:"The last night float shift on the whole calendar. You walk out of 2026 and off nights." },
     "1/22/27":  { emoji:"💍", title:"Happy 3rd anniversary!",
                   note:"Three years. Right in the middle of the staycation." },
+    "2/1/27":   { emoji:"🐩", title:"Westminster Dog Show!",
+                  note:"The 151st, and we have tickets. Out at 6pm — go straight there." },
+    "2/14/27":  { emoji:"💕", title:"Happy Valentine's Day!",
+                  note:"Off today, but you come off a night shift at 6am and you're back Monday. Sleep first, dinner after." },
+    "4/20/27":  { emoji:"🎂", title:"Happy birthday, Gus!",
+                  note:"Give the birthday dog a scratch from us." },
     "6/11/27":  { emoji:"🎉", title:"Last day of residency!",
                   note:"The final shift on the whole calendar. Out at 6pm, and then it's done." }
   };
@@ -947,7 +957,7 @@ body{
     }
 
     /* ---- coming up ---- */
-    var ms = milestonesFrom(t).slice(0, 4), upHTML = "";
+    var ms = milestonesFrom(t).slice(0, 3), upHTML = "";
     for(var u = 0; u < ms.length; u++){
       var m = ms[u];
       var away = m.idx - t;
