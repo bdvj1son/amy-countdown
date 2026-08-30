@@ -432,8 +432,10 @@ body{
     <div class="tally-grid">
       <div class="tally day"><span class="n" id="tBlockDay">–</span><span class="l">Block day shifts</span></div>
       <div class="tally nf"><span class="n" id="tBlockNight">–</span><span class="l">Night&nbsp;float nights</span></div>
-      <div class="tally wknd-day"><span class="n" id="tWkDay">–</span><span class="l">Weekend day shifts</span></div>
-      <div class="tally wknd-night"><span class="n" id="tWkNight">–</span><span class="l">Weekend overnights</span></div>
+      <div class="tally wknd-day"><span class="n" id="tLijDay">–</span><span class="l">LIJ weekend days</span></div>
+      <div class="tally wknd-day"><span class="n" id="tNsDay">–</span><span class="l">NS weekend days</span></div>
+      <div class="tally wknd-night"><span class="n" id="tLijNight">–</span><span class="l">LIJ weekend overnights</span></div>
+      <div class="tally wknd-night"><span class="n" id="tNsNight">–</span><span class="l">NS weekend overnights</span></div>
       <div class="tally total"><span class="n" id="tAll">–</span><span class="l">shifts left until 6/13/27</span></div>
     </div>
   </section>
@@ -752,7 +754,8 @@ body{
       $("banner").style.display     = "none";
       $("comingCard").style.display = "none";
       $("stripCard").style.display  = "none";
-      ["tBlockDay","tBlockNight","tWkDay","tWkNight","tAll"].forEach(function(id){
+      ["tBlockDay","tBlockNight","tLijDay","tNsDay",
+       "tLijNight","tNsNight","tAll"].forEach(function(id){
         $(id).textContent = "0";
       });
       $("foot").textContent = "Schedule complete · 8/30/26 – 6/13/27";
@@ -965,8 +968,10 @@ body{
     /* ---- tallies ---- */
     $("tBlockDay").textContent   = countRemaining(now, function(r){ return r.type === "Block"   && r.time === "Day";   });
     $("tBlockNight").textContent = countRemaining(now, function(r){ return r.type === "Block"   && r.time === "Night"; });
-    $("tWkDay").textContent      = countRemaining(now, function(r){ return r.type === "Weekend" && r.time === "Day";   });
-    $("tWkNight").textContent    = countRemaining(now, function(r){ return r.type === "Weekend" && r.time === "Night"; });
+    $("tLijDay").textContent     = countRemaining(now, function(r){ return r.type === "Weekend" && r.time === "Day"   && r.shift === "LIJ"; });
+    $("tNsDay").textContent      = countRemaining(now, function(r){ return r.type === "Weekend" && r.time === "Day"   && r.shift === "NS";  });
+    $("tLijNight").textContent   = countRemaining(now, function(r){ return r.type === "Weekend" && r.time === "Night" && r.shift === "LIJ"; });
+    $("tNsNight").textContent    = countRemaining(now, function(r){ return r.type === "Weekend" && r.time === "Night" && r.shift === "NS";  });
     $("tAll").textContent        = countRemaining(now, function(){ return true; });
 
     var daysLeft = N - t;
