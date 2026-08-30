@@ -910,10 +910,14 @@ body{
     for(var j = t; j < N; j++){ if(!worked(j)){ offIdx = j; break; } }
     var offCard = $("offCard");
     if(offIdx < 0){
+      /* No days off left means she is on the final stretch, so this counts
+         down to finishing rather than reporting an absence. */
       offCard.className = "count";
-      $("offDigits").innerHTML = '<span class="digit-group"><span class="n">—</span></span>';
-      $("offNote").textContent = "No days off left on the calendar.";
-      $("offWhen").textContent = "";
+      $("offTitle").textContent = "Until you're done";
+      $("offWhen").textContent  = fmtMed(DONE_AT);
+      $("offDigits").innerHTML  = digitsHTML(DONE_AT - now);
+      $("offNote").textContent  = "The final shift ends at " + fmtClock(DONE_AT) +
+                                  " — and then it's over.";
     } else {
       var free = freedomStart(offIdx);
       var offRec = rec(offIdx);
@@ -943,14 +947,11 @@ body{
     for(var v = t; v < N; v++){ if(rec(v).shift === "Vacation"){ vacIdx = v; break; } }
     var vacCard = $("vacCard");
     if(vacIdx < 0){
-      vacCard.className = "count vacay";
-      $("vacTitle").textContent = "Next vacation";
-      $("vacDigits").innerHTML  = '<span class="digit-group"><span class="n">—</span></span>';
-      $("vacNote").textContent  = "No vacation left on this schedule.";
-      $("vacWhen").textContent  = "";
-      $("vacDest").innerHTML    = "";
-      $("vacDest").style.display = "none";
+      /* Once the last vacation is behind her the card has nothing to say,
+         so it leaves rather than sitting there empty. */
+      vacCard.style.display = "none";
     } else {
+      vacCard.style.display = "";
       var vstart = vacIdx;
       while(vstart - 1 >= 0 && rec(vstart - 1).shift === "Vacation") vstart--;
       var vend = vacIdx;
@@ -959,9 +960,9 @@ body{
       var vlen  = vend - vstart + 1;
       $("vacWhen").textContent = fmtShort(dateOf(vstart)) + " – " + fmtShort(dateOf(vend));
       var vtrip = tripAt(vstart);
+      /* Name only — the trip's detail already appears in Coming Up. */
       $("vacDest").innerHTML = vtrip
-        ? '<span class="flag">' + vtrip.emoji + '</span>' + vtrip.name +
-          (vtrip.detail ? ' · ' + vtrip.detail : '')
+        ? '<span class="flag">' + vtrip.emoji + '</span>' + vtrip.name
         : "";
       $("vacDest").style.display = vtrip ? "" : "none";
       if(vfree <= now && cur.shift === "Vacation"){
