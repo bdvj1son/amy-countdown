@@ -227,6 +227,56 @@ body{
   text-transform:uppercase;letter-spacing:.06em;
 }
 .count-note{font-size:13px;color:var(--ink-soft);}
+.count-dest{
+  font-size:13px;font-weight:600;color:var(--peri);
+  display:flex;align-items:center;gap:6px;
+}
+.count-dest .flag{font-size:15px;}
+
+/* ---------- today's occasion ---------- */
+.banner{
+  display:flex;align-items:center;gap:14px;
+  border-radius:20px;padding:16px 18px;
+  background:var(--rose-wash);
+  border:1px solid transparent;
+  box-shadow:var(--shadow);
+}
+.banner-emoji{font-size:30px;line-height:1;flex:0 0 auto;}
+.banner-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.banner-title{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:20px;font-weight:700;line-height:1.15;
+  color:var(--rose);text-wrap:balance;
+}
+.banner-note{font-size:13px;color:var(--ink-soft);line-height:1.4;}
+
+/* ---------- coming up ---------- */
+.up-list{display:flex;flex-direction:column;}
+.up{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 0;border-top:1px solid var(--line);
+}
+.up:first-child{border-top:none;padding-top:2px;}
+.up:last-child{padding-bottom:2px;}
+.up-emoji{font-size:19px;line-height:1;width:24px;text-align:center;flex:0 0 auto;}
+.up-body{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:1px;}
+.up-name{font-size:14px;font-weight:600;line-height:1.25;}
+.up-detail{font-size:12px;color:var(--ink-soft);line-height:1.3;}
+.up-when{
+  flex:0 0 auto;text-align:right;white-space:nowrap;
+  font-size:12px;color:var(--ink-faint);font-variant-numeric:tabular-nums;
+}
+.up-when b{
+  display:block;font-family:"Fraunces",Georgia,serif;
+  font-size:16px;font-weight:700;color:var(--rose);line-height:1.1;
+}
+
+/* a dot under strip days that carry an occasion */
+.d-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--rose);margin-top:-1px;
+}
+.d-dot.blank{background:transparent;}
 
 /* ---------- 14 day strip ---------- */
 .strip{display:flex;gap:5px;justify-content:space-between;}
@@ -304,6 +354,14 @@ body{
     <p class="clock" id="clock">&nbsp;</p>
   </header>
 
+  <section class="banner" id="banner" style="display:none">
+    <div class="banner-emoji" id="bannerEmoji"></div>
+    <div class="banner-text">
+      <div class="banner-title" id="bannerTitle"></div>
+      <div class="banner-note" id="bannerNote"></div>
+    </div>
+  </section>
+
   <section class="now" id="nowCard">
     <div class="orb" id="orb"></div>
     <div class="now-text">
@@ -347,9 +405,15 @@ body{
         <span class="count-when" id="vacWhen"></span>
       </div>
       <div class="digits" id="vacDigits"></div>
+      <div class="count-dest" id="vacDest" style="display:none"></div>
       <div class="count-note" id="vacNote"></div>
     </section>
   </div>
+
+  <section class="card" id="comingCard">
+    <p class="eyebrow">Coming up</p>
+    <div class="up-list" id="upList"></div>
+  </section>
 
   <section class="card" id="stripCard">
     <p class="eyebrow">Next two weeks</p>
@@ -410,9 +474,42 @@ body{
     "LIJ NF":"LIJ Night Float", "NS NF":"NS Night Float",
     "NS GYN":"NS Gynecology",   "LIJ GYN":"LIJ Gynecology",
     "LIJ L&D":"LIJ Labor & Delivery", "ONC":"Oncology",
-    "SClinic":"Clinic (S)",     "Clinic":"Clinic",
+    "Clinic":"Clinic",
     "Surgery":"Surgery",        "NS":"North Shore", "LIJ":"LIJ"
   };
+
+  /* ---------------- the good stuff ----------------
+     Single days worth celebrating. Keyed M/D/YY. */
+  var EVENTS = {
+    "9/12/26":  { emoji:"🍣", title:"Happy birthday, Amy!",
+                  note:"Fancy sushi tonight — and it lands on the one night you're off all week." },
+    "9/23/26":  { emoji:"✉️", title:"Match Day!",
+                  note:"Fellowship results today. Whatever it says, it's a night shift after — so celebrate at breakfast." },
+    "11/26/26": { emoji:"🦃", title:"Happy Thanksgiving!",
+                  note:"And it's a real day off." },
+    "12/24/26": { emoji:"🎄", title:"Merry Christmas Eve!",
+                  note:"On nights, but the tree will still be there in the morning." },
+    "12/25/26": { emoji:"🎁", title:"Merry Christmas!",
+                  note:"Nights again. We'll do Christmas properly whenever you wake up." },
+    "12/31/26": { emoji:"🥂", title:"Happy New Year's Eve!",
+                  note:"You'll be at work for midnight. Saving you a toast." },
+    "1/1/27":   { emoji:"🎊", title:"Happy New Year!",
+                  note:"The last night float shift on the whole calendar. You walk out of 2026 and off nights." },
+    "1/22/27":  { emoji:"💍", title:"Happy 3rd anniversary!",
+                  note:"Three years. Right in the middle of the staycation." }
+  };
+
+  /* Multi-day trips. Keyed by first and last day, M/D/YY. */
+  var TRIPS = [
+    { start:"10/10/26", end:"10/18/26", emoji:"🚢",
+      name:"Mediterranean cruise", detail:"Spain → France → Italy" },
+    { start:"10/26/26", end:"10/27/26", emoji:"🦀",
+      name:"ASRM",                  detail:"Conference in Baltimore" },
+    { start:"1/16/27",  end:"1/24/27",  emoji:"🏡",
+      name:"Staycation",            detail:"3rd anniversary on the 22nd" },
+    { start:"3/26/27",  end:"4/4/27",   emoji:"🗾",
+      name:"Osaka, Japan",          detail:"Ten days" }
+  ];
 
   var START = new Date(2026, 7, 30, 0, 0, 0, 0);   // Aug 30 2026
   var N = SEQ.length;
@@ -432,6 +529,60 @@ body{
     return Math.round((midnight(d) - START) / DAYMS);
   }
   function worked(i){ return rec(i).type !== "Off"; }
+
+  /* M/D/YY key for a schedule index, and the reverse */
+  function keyOf(i){
+    var d = dateOf(i);
+    return (d.getMonth()+1) + "/" + d.getDate() + "/" + String(d.getFullYear()).slice(2);
+  }
+  function idxOfKey(s){
+    var p = s.split("/");
+    return idxOf(new Date(2000 + (+p[2]), (+p[0]) - 1, +p[1]));
+  }
+
+  /* Resolve the date keys once, up front */
+  var EVENT_AT = {};
+  (function(){
+    for(var k in EVENTS){
+      if(!EVENTS.hasOwnProperty(k)) continue;
+      var i = idxOfKey(k);
+      if(i >= 0 && i < N) EVENT_AT[i] = EVENTS[k];
+    }
+    for(var j = 0; j < TRIPS.length; j++){
+      TRIPS[j].startIdx = idxOfKey(TRIPS[j].start);
+      TRIPS[j].endIdx   = idxOfKey(TRIPS[j].end);
+    }
+  })();
+
+  function tripAt(i){
+    for(var j = 0; j < TRIPS.length; j++){
+      if(i >= TRIPS[j].startIdx && i <= TRIPS[j].endIdx) return TRIPS[j];
+    }
+    return null;
+  }
+
+  /* Everything still ahead, nearest first: one-off events plus trip departures */
+  function milestonesFrom(t){
+    var out = [], i, j;
+    for(i in EVENT_AT){
+      if(!EVENT_AT.hasOwnProperty(i)) continue;
+      i = +i;
+      if(i >= t) out.push({ idx:i, emoji:EVENT_AT[i].emoji,
+                            name:EVENT_AT[i].title.replace(/!$/, ""),
+                            detail:"" });
+    }
+    for(j = 0; j < TRIPS.length; j++){
+      if(TRIPS[j].endIdx >= t){
+        out.push({ idx:Math.max(TRIPS[j].startIdx, t), sortIdx:TRIPS[j].startIdx,
+                   emoji:TRIPS[j].emoji, name:TRIPS[j].name,
+                   detail:TRIPS[j].detail, trip:TRIPS[j] });
+      }
+    }
+    out.sort(function(a, b){
+      return (a.sortIdx != null ? a.sortIdx : a.idx) - (b.sortIdx != null ? b.sortIdx : b.idx);
+    });
+    return out;
+  }
 
   /* Day shift: D 06:00 -> D 18:00.  Night shift: D 18:00 -> D+1 06:00 */
   function shiftStart(i){
@@ -594,9 +745,12 @@ body{
       $("vacTitle").textContent = "Next vacation";
       $("vacWhen").textContent  = "";
       $("vacDigits").innerHTML  = '<span class="digit-group"><span class="n">&mdash;</span></span>';
+      $("vacDest").style.display = "none";
       $("vacNote").textContent  = "No vacation left on this schedule.";
 
-      $("stripCard").style.display = "none";
+      $("banner").style.display     = "none";
+      $("comingCard").style.display = "none";
+      $("stripCard").style.display  = "none";
       ["tBlockDay","tBlockNight","tWkDay","tWkNight","tAll"].forEach(function(id){
         $(id).textContent = "0";
       });
@@ -609,6 +763,17 @@ body{
     var act  = activeShift(now);
     var cur  = rec(t);
     var isNF = cur.type === "Block" && cur.time === "Night";
+
+    /* ---- today's occasion ---- */
+    var occ = EVENT_AT[t];
+    if(occ){
+      $("banner").style.display = "";
+      $("bannerEmoji").textContent = occ.emoji;
+      $("bannerTitle").textContent = occ.title;
+      $("bannerNote").textContent  = occ.note || "";
+    } else {
+      $("banner").style.display = "none";
+    }
 
     /* ---- right now ---- */
     var card = $("nowCard"), orb = $("orb");
@@ -632,7 +797,8 @@ body{
       $("nowLabel").textContent = sleeping ? "Between nights" : "Right now";
       $("nowHead").textContent  = sleeping ? "Rest up"
                                 : onVac    ? "On vacation"
-                                : cur.shift === "Conference" ? "At a conference"
+                                : cur.shift === "Conference"
+                                    ? "At " + ((tripAt(t) || {}).name || "a conference")
                                 : "Off duty";
       var nx = nextShiftIdx(now);
       $("nowSub").textContent = nx < 0 ? "Nothing left on the calendar."
@@ -702,7 +868,7 @@ body{
         $("offTitle").textContent = nightOnly ? "Next night off" : "Next day off";
         $("offDigits").innerHTML  = digitsHTML(free - now);
         $("offNote").textContent  = nightOnly
-          ? "You're out at " + fmtClock(free) + " — still on nights, so it's the evening that's really yours."
+          ? "You're out at " + fmtClock(free) + ". Still nocturnal, so Saturday night is date night."
           : "You're out " + fmtMed(free) + " at " + fmtClock(free) + ".";
       }
     }
@@ -717,6 +883,8 @@ body{
       $("vacDigits").innerHTML  = '<span class="digit-group"><span class="n">—</span></span>';
       $("vacNote").textContent  = "No vacation left on this schedule.";
       $("vacWhen").textContent  = "";
+      $("vacDest").innerHTML    = "";
+      $("vacDest").style.display = "none";
     } else {
       var vstart = vacIdx;
       while(vstart - 1 >= 0 && rec(vstart - 1).shift === "Vacation") vstart--;
@@ -725,9 +893,15 @@ body{
       var vfree = freedomStart(vstart);
       var vlen  = vend - vstart + 1;
       $("vacWhen").textContent = fmtShort(dateOf(vstart)) + " – " + fmtShort(dateOf(vend));
+      var vtrip = tripAt(vstart);
+      $("vacDest").innerHTML = vtrip
+        ? '<span class="flag">' + vtrip.emoji + '</span>' + vtrip.name +
+          (vtrip.detail ? ' · ' + vtrip.detail : '')
+        : "";
+      $("vacDest").style.display = vtrip ? "" : "none";
       if(vfree <= now && cur.shift === "Vacation"){
         vacCard.className = "count vacay free";
-        $("vacTitle").textContent = "On vacation";
+        $("vacTitle").textContent = vtrip ? "On the trip" : "On vacation";
         var endMs = dateOf(vend); endMs.setHours(24,0,0,0);
         $("vacDigits").innerHTML = digitsHTML(endMs - now);
         $("vacNote").textContent = "left of " + vlen + " days off together.";
@@ -738,6 +912,32 @@ body{
         $("vacNote").textContent  = vlen + " days off, starting " + fmtMed(dateOf(vstart)) + ".";
       }
     }
+
+    /* ---- coming up ---- */
+    var ms = milestonesFrom(t).slice(0, 4), upHTML = "";
+    for(var u = 0; u < ms.length; u++){
+      var m = ms[u];
+      var away = m.idx - t;
+      var whenBig, whenSmall;
+      if(m.trip && t >= m.trip.startIdx && t <= m.trip.endIdx){
+        whenBig = "now"; whenSmall = "you're there";
+      } else if(away === 0){
+        whenBig = "today"; whenSmall = "";
+      } else if(away === 1){
+        whenBig = "tomorrow"; whenSmall = "";
+      } else {
+        whenBig = away; whenSmall = "days";
+      }
+      upHTML += '<div class="up">' +
+        '<span class="up-emoji">' + m.emoji + '</span>' +
+        '<span class="up-body"><span class="up-name">' + m.name + '</span>' +
+        (m.detail ? '<span class="up-detail">' + m.detail + '</span>' : '') +
+        '</span>' +
+        '<span class="up-when"><b>' + whenBig + '</b>' + whenSmall + '</span>' +
+      '</div>';
+    }
+    $("upList").innerHTML = upHTML;
+    $("comingCard").style.display = upHTML ? "" : "none";
 
     /* ---- next two weeks ---- */
     var strip = $("strip"), html = "";
@@ -756,6 +956,7 @@ body{
                 '<span class="pill"><span class="' + dayCls + '"></span>' +
                 '<span class="' + nightCls + '"></span></span>' +
                 '<span class="d-num">' + d.getDate() + '</span>' +
+                '<span class="d-dot' + (EVENT_AT[di] ? '' : ' blank') + '"></span>' +
               '</div>';
     }
     strip.innerHTML = html;
