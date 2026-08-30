@@ -470,10 +470,10 @@ body{
       <div class="tally day"><span class="n" id="tBlockDay">–</span><span class="l">Block day shifts</span></div>
       <div class="tally nf"><span class="n" id="tBlockNight">–</span><span class="l">Night&nbsp;float nights</span></div>
       <div class="tally wknd-day"><span class="n" id="tLijDay">–</span><span class="l">LIJ weekend days</span></div>
-      <div class="tally wknd-day"><span class="n" id="tNsDay">–</span><span class="l">NS weekend days</span></div>
       <div class="tally wknd-night"><span class="n" id="tLijNight">–</span><span class="l">LIJ weekend overnights</span></div>
+      <div class="tally wknd-day"><span class="n" id="tNsDay">–</span><span class="l">NS weekend days</span></div>
       <div class="tally wknd-night"><span class="n" id="tNsNight">–</span><span class="l">NS weekend overnights</span></div>
-      <div class="tally total"><span class="n" id="tAll">–</span><span class="l">shifts left until 6/13/27</span></div>
+      <div class="tally total"><span class="n" id="tAll">–</span><span class="l">shifts left until 6/11/27</span></div>
     </div>
   </section>
 
@@ -487,7 +487,7 @@ body{
   /* ---------------- schedule data ----------------
      One character per day, starting 8/30/2026.
      Each char indexes COMBOS below. Generated from the CSV. */
-  var SEQ = "AAAAAABAAAAAABAAAAAABAAAAAABAAAAAACCDDDDDEEEEEEEEEDDDDDCCFFDDDGGHHHHHCCHHHHHCCHHHHHCCHHHCHICHHHHHCJJJJJJBJJJJJJBJJJJJJBJJJJJJCCKKKKKLLKKKKKEEEEEEEEEKKKKKLLKKKKKMCNNNNNMCGNNNNCCNNNNNCCNNNNNLLOOOOOMCOOOOOICOOOOEEEEEEEEEEOOOOOLLPPPPPCCPPPPPLLPPPPPMCPPPPPCCQQQQQCCQQQQQCCQQQQQGGCQQQQICQQQQQCC";
+  var SEQ = "AAAAAABAAAAAABAAAAAABAAAAAABAAAAAACCDDDDDEEEEEEEEEDDDDDCCFFDDDGGHHHHHCCHHHHHCCHHHHHCCHHHCHICHHHHHCJJJJJJBJJJJJJBJJJJJJBJJJJJJCCKKKKKLLKKKKKEEEEEEEEEKKKKKLLKKKKKMCNNNNNMCGNNNNCCNNNNNCCNNNNNLLOOOOOMCOOOOOICOOOOEEEEEEEEEEOOOOOLLPPPPPCCPPPPPLLPPPPPMCPPPPPCCQQQQQCCQQQQQCCQQQQQGGCQQQQICQQQQQ";
 
   var COMBOS = [
     ["LIJ NF",  "Block",   "Night"],  // A
@@ -1041,7 +1041,8 @@ body{
     $("tAll").textContent        = countRemaining(now, function(){ return true; });
 
     var daysLeft = N - t;
-    $("foot").textContent = daysLeft + " days on the calendar · through June 13, 2027";
+    $("foot").textContent = daysLeft + (daysLeft === 1 ? " day" : " days") +
+                            " on the calendar · through June 11, 2027";
   }
 
   render();
