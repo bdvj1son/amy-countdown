@@ -1,0 +1,289 @@
+Day,Date,Shift,Type,Time
+Sunday,8/30/26,LIJ NF,Block,Night
+Monday,8/31/26,LIJ NF,Block,Night
+Tuesday,9/1/26,LIJ NF,Block,Night
+Wednesday,9/2/26,LIJ NF,Block,Night
+Thursday,9/3/26,LIJ NF,Block,Night
+Friday,9/4/26,LIJ NF,Block,Night
+Saturday,9/5/26,-,Off,Night
+Sunday,9/6/26,LIJ NF,Block,Night
+Monday,9/7/26,LIJ NF,Block,Night
+Tuesday,9/8/26,LIJ NF,Block,Night
+Wednesday,9/9/26,LIJ NF,Block,Night
+Thursday,9/10/26,LIJ NF,Block,Night
+Friday,9/11/26,LIJ NF,Block,Night
+Saturday,9/12/26,-,Off,Night
+Sunday,9/13/26,LIJ NF,Block,Night
+Monday,9/14/26,LIJ NF,Block,Night
+Tuesday,9/15/26,LIJ NF,Block,Night
+Wednesday,9/16/26,LIJ NF,Block,Night
+Thursday,9/17/26,LIJ NF,Block,Night
+Friday,9/18/26,LIJ NF,Block,Night
+Saturday,9/19/26,-,Off,Night
+Sunday,9/20/26,LIJ NF,Block,Night
+Monday,9/21/26,LIJ NF,Block,Night
+Tuesday,9/22/26,LIJ NF,Block,Night
+Wednesday,9/23/26,LIJ NF,Block,Night
+Thursday,9/24/26,LIJ NF,Block,Night
+Friday,9/25/26,LIJ NF,Block,Night
+Saturday,9/26/26,-,Off,Night
+Sunday,9/27/26,LIJ NF,Block,Night
+Monday,9/28/26,LIJ NF,Block,Night
+Tuesday,9/29/26,LIJ NF,Block,Night
+Wednesday,9/30/26,LIJ NF,Block,Night
+Thursday,10/1/26,LIJ NF,Block,Night
+Friday,10/2/26,LIJ NF,Block,Night
+Saturday,10/3/26,-,Off,Day
+Sunday,10/4/26,-,Off,Day
+Monday,10/5/26,Clinic,Block,Day
+Tuesday,10/6/26,Clinic,Block,Day
+Wednesday,10/7/26,Clinic,Block,Day
+Thursday,10/8/26,Clinic,Block,Day
+Friday,10/9/26,Clinic,Block,Day
+Saturday,10/10/26,Vacation,Off,Day
+Sunday,10/11/26,Vacation,Off,Day
+Monday,10/12/26,Vacation,Off,Day
+Tuesday,10/13/26,Vacation,Off,Day
+Wednesday,10/14/26,Vacation,Off,Day
+Thursday,10/15/26,Vacation,Off,Day
+Friday,10/16/26,Vacation,Off,Day
+Saturday,10/17/26,Vacation,Off,Day
+Sunday,10/18/26,Vacation,Off,Day
+Monday,10/19/26,Clinic,Block,Day
+Tuesday,10/20/26,Clinic,Block,Day
+Wednesday,10/21/26,Clinic,Block,Day
+Thursday,10/22/26,Clinic,Block,Day
+Friday,10/23/26,Clinic,Block,Day
+Saturday,10/24/26,-,Off,Day
+Sunday,10/25/26,-,Off,Day
+Monday,10/26/26,Conference,Off,Day
+Tuesday,10/27/26,Conference,Off,Day
+Wednesday,10/28/26,Clinic,Block,Day
+Thursday,10/29/26,Clinic,Block,Day
+Friday,10/30/26,Clinic,Block,Day
+Saturday,10/31/26,NS,Weekend,Day
+Sunday,11/1/26,NS,Weekend,Day
+Monday,11/2/26,NS GYN,Block,Day
+Tuesday,11/3/26,NS GYN,Block,Day
+Wednesday,11/4/26,NS GYN,Block,Day
+Thursday,11/5/26,NS GYN,Block,Day
+Friday,11/6/26,NS GYN,Block,Day
+Saturday,11/7/26,-,Off,Day
+Sunday,11/8/26,-,Off,Day
+Monday,11/9/26,NS GYN,Block,Day
+Tuesday,11/10/26,NS GYN,Block,Day
+Wednesday,11/11/26,NS GYN,Block,Day
+Thursday,11/12/26,NS GYN,Block,Day
+Friday,11/13/26,NS GYN,Block,Day
+Saturday,11/14/26,-,Off,Day
+Sunday,11/15/26,-,Off,Day
+Monday,11/16/26,NS GYN,Block,Day
+Tuesday,11/17/26,NS GYN,Block,Day
+Wednesday,11/18/26,NS GYN,Block,Day
+Thursday,11/19/26,NS GYN,Block,Day
+Friday,11/20/26,NS GYN,Block,Day
+Saturday,11/21/26,-,Off,Day
+Sunday,11/22/26,-,Off,Day
+Monday,11/23/26,NS GYN,Block,Day
+Tuesday,11/24/26,NS GYN,Block,Day
+Wednesday,11/25/26,NS GYN,Block,Day
+Thursday,11/26/26,-,Off,Day
+Friday,11/27/26,NS GYN,Block,Day
+Saturday,11/28/26,LIJ,Weekend,Night
+Sunday,11/29/26,-,Off,Day
+Monday,11/30/26,NS GYN,Block,Day
+Tuesday,12/1/26,NS GYN,Block,Day
+Wednesday,12/2/26,NS GYN,Block,Day
+Thursday,12/3/26,NS GYN,Block,Day
+Friday,12/4/26,NS GYN,Block,Day
+Saturday,12/5/26,-,Off,Day
+Sunday,12/6/26,NS NF,Block,Night
+Monday,12/7/26,NS NF,Block,Night
+Tuesday,12/8/26,NS NF,Block,Night
+Wednesday,12/9/26,NS NF,Block,Night
+Thursday,12/10/26,NS NF,Block,Night
+Friday,12/11/26,NS NF,Block,Night
+Saturday,12/12/26,-,Off,Night
+Sunday,12/13/26,NS NF,Block,Night
+Monday,12/14/26,NS NF,Block,Night
+Tuesday,12/15/26,NS NF,Block,Night
+Wednesday,12/16/26,NS NF,Block,Night
+Thursday,12/17/26,NS NF,Block,Night
+Friday,12/18/26,NS NF,Block,Night
+Saturday,12/19/26,-,Off,Night
+Sunday,12/20/26,NS NF,Block,Night
+Monday,12/21/26,NS NF,Block,Night
+Tuesday,12/22/26,NS NF,Block,Night
+Wednesday,12/23/26,NS NF,Block,Night
+Thursday,12/24/26,NS NF,Block,Night
+Friday,12/25/26,NS NF,Block,Night
+Saturday,12/26/26,-,Off,Night
+Sunday,12/27/26,NS NF,Block,Night
+Monday,12/28/26,NS NF,Block,Night
+Tuesday,12/29/26,NS NF,Block,Night
+Wednesday,12/30/26,NS NF,Block,Night
+Thursday,12/31/26,NS NF,Block,Night
+Friday,1/1/27,NS NF,Block,Night
+Saturday,1/2/27,-,Off,Day
+Sunday,1/3/27,-,Off,Day
+Monday,1/4/27,SClinic,Block,Day
+Tuesday,1/5/27,SClinic,Block,Day
+Wednesday,1/6/27,SClinic,Block,Day
+Thursday,1/7/27,SClinic,Block,Day
+Friday,1/8/27,SClinic,Block,Day
+Saturday,1/9/27,LIJ,Weekend,Day
+Sunday,1/10/27,LIJ,Weekend,Day
+Monday,1/11/27,SClinic,Block,Day
+Tuesday,1/12/27,SClinic,Block,Day
+Wednesday,1/13/27,SClinic,Block,Day
+Thursday,1/14/27,SClinic,Block,Day
+Friday,1/15/27,SClinic,Block,Day
+Saturday,1/16/27,Vacation,Off,Day
+Sunday,1/17/27,Vacation,Off,Day
+Monday,1/18/27,Vacation,Off,Day
+Tuesday,1/19/27,Vacation,Off,Day
+Wednesday,1/20/27,Vacation,Off,Day
+Thursday,1/21/27,Vacation,Off,Day
+Friday,1/22/27,Vacation,Off,Day
+Saturday,1/23/27,Vacation,Off,Day
+Sunday,1/24/27,Vacation,Off,Day
+Monday,1/25/27,SClinic,Block,Day
+Tuesday,1/26/27,SClinic,Block,Day
+Wednesday,1/27/27,SClinic,Block,Day
+Thursday,1/28/27,SClinic,Block,Day
+Friday,1/29/27,SClinic,Block,Day
+Saturday,1/30/27,LIJ,Weekend,Day
+Sunday,1/31/27,LIJ,Weekend,Day
+Monday,2/1/27,SClinic,Block,Day
+Tuesday,2/2/27,SClinic,Block,Day
+Wednesday,2/3/27,SClinic,Block,Day
+Thursday,2/4/27,SClinic,Block,Day
+Friday,2/5/27,SClinic,Block,Day
+Saturday,2/6/27,NS,Weekend,Night
+Sunday,2/7/27,-,Off,Day
+Monday,2/8/27,LIJ GYN,Block,Day
+Tuesday,2/9/27,LIJ GYN,Block,Day
+Wednesday,2/10/27,LIJ GYN,Block,Day
+Thursday,2/11/27,LIJ GYN,Block,Day
+Friday,2/12/27,LIJ GYN,Block,Day
+Saturday,2/13/27,NS,Weekend,Night
+Sunday,2/14/27,-,Off,Day
+Monday,2/15/27,NS,Weekend,Day
+Tuesday,2/16/27,LIJ GYN,Block,Day
+Wednesday,2/17/27,LIJ GYN,Block,Day
+Thursday,2/18/27,LIJ GYN,Block,Day
+Friday,2/19/27,LIJ GYN,Block,Day
+Saturday,2/20/27,-,Off,Day
+Sunday,2/21/27,-,Off,Day
+Monday,2/22/27,LIJ GYN,Block,Day
+Tuesday,2/23/27,LIJ GYN,Block,Day
+Wednesday,2/24/27,LIJ GYN,Block,Day
+Thursday,2/25/27,LIJ GYN,Block,Day
+Friday,2/26/27,LIJ GYN,Block,Day
+Saturday,2/27/27,-,Off,Day
+Sunday,2/28/27,-,Off,Day
+Monday,3/1/27,LIJ GYN,Block,Day
+Tuesday,3/2/27,LIJ GYN,Block,Day
+Wednesday,3/3/27,LIJ GYN,Block,Day
+Thursday,3/4/27,LIJ GYN,Block,Day
+Friday,3/5/27,LIJ GYN,Block,Day
+Saturday,3/6/27,LIJ,Weekend,Day
+Sunday,3/7/27,LIJ,Weekend,Day
+Monday,3/8/27,Surgery,Block,Day
+Tuesday,3/9/27,Surgery,Block,Day
+Wednesday,3/10/27,Surgery,Block,Day
+Thursday,3/11/27,Surgery,Block,Day
+Friday,3/12/27,Surgery,Block,Day
+Saturday,3/13/27,NS,Weekend,Night
+Sunday,3/14/27,-,Off,Day
+Monday,3/15/27,Surgery,Block,Day
+Tuesday,3/16/27,Surgery,Block,Day
+Wednesday,3/17/27,Surgery,Block,Day
+Thursday,3/18/27,Surgery,Block,Day
+Friday,3/19/27,Surgery,Block,Day
+Saturday,3/20/27,LIJ,Weekend,Night
+Sunday,3/21/27,-,Off,Day
+Monday,3/22/27,Surgery,Block,Day
+Tuesday,3/23/27,Surgery,Block,Day
+Wednesday,3/24/27,Surgery,Block,Day
+Thursday,3/25/27,Surgery,Block,Day
+Friday,3/26/27,Vacation,Off,Day
+Saturday,3/27/27,Vacation,Off,Day
+Sunday,3/28/27,Vacation,Off,Day
+Monday,3/29/27,Vacation,Off,Day
+Tuesday,3/30/27,Vacation,Off,Day
+Wednesday,3/31/27,Vacation,Off,Day
+Thursday,4/1/27,Vacation,Off,Day
+Friday,4/2/27,Vacation,Off,Day
+Saturday,4/3/27,Vacation,Off,Day
+Sunday,4/4/27,Vacation,Off,Day
+Monday,4/5/27,Surgery,Block,Day
+Tuesday,4/6/27,Surgery,Block,Day
+Wednesday,4/7/27,Surgery,Block,Day
+Thursday,4/8/27,Surgery,Block,Day
+Friday,4/9/27,Surgery,Block,Day
+Saturday,4/10/27,LIJ,Weekend,Day
+Sunday,4/11/27,LIJ,Weekend,Day
+Monday,4/12/27,LIJ L&D,Block,Day
+Tuesday,4/13/27,LIJ L&D,Block,Day
+Wednesday,4/14/27,LIJ L&D,Block,Day
+Thursday,4/15/27,LIJ L&D,Block,Day
+Friday,4/16/27,LIJ L&D,Block,Day
+Saturday,4/17/27,-,Off,Day
+Sunday,4/18/27,-,Off,Day
+Monday,4/19/27,LIJ L&D,Block,Day
+Tuesday,4/20/27,LIJ L&D,Block,Day
+Wednesday,4/21/27,LIJ L&D,Block,Day
+Thursday,4/22/27,LIJ L&D,Block,Day
+Friday,4/23/27,LIJ L&D,Block,Day
+Saturday,4/24/27,LIJ,Weekend,Day
+Sunday,4/25/27,LIJ,Weekend,Day
+Monday,4/26/27,LIJ L&D,Block,Day
+Tuesday,4/27/27,LIJ L&D,Block,Day
+Wednesday,4/28/27,LIJ L&D,Block,Day
+Thursday,4/29/27,LIJ L&D,Block,Day
+Friday,4/30/27,LIJ L&D,Block,Day
+Saturday,5/1/27,NS,Weekend,Night
+Sunday,5/2/27,-,Off,Day
+Monday,5/3/27,LIJ L&D,Block,Day
+Tuesday,5/4/27,LIJ L&D,Block,Day
+Wednesday,5/5/27,LIJ L&D,Block,Day
+Thursday,5/6/27,LIJ L&D,Block,Day
+Friday,5/7/27,LIJ L&D,Block,Day
+Saturday,5/8/27,-,Off,Day
+Sunday,5/9/27,-,Off,Day
+Monday,5/10/27,ONC,Block,Day
+Tuesday,5/11/27,ONC,Block,Day
+Wednesday,5/12/27,ONC,Block,Day
+Thursday,5/13/27,ONC,Block,Day
+Friday,5/14/27,ONC,Block,Day
+Saturday,5/15/27,-,Off,Day
+Sunday,5/16/27,-,Off,Day
+Monday,5/17/27,ONC,Block,Day
+Tuesday,5/18/27,ONC,Block,Day
+Wednesday,5/19/27,ONC,Block,Day
+Thursday,5/20/27,ONC,Block,Day
+Friday,5/21/27,ONC,Block,Day
+Saturday,5/22/27,-,Off,Day
+Sunday,5/23/27,-,Off,Day
+Monday,5/24/27,ONC,Block,Day
+Tuesday,5/25/27,ONC,Block,Day
+Wednesday,5/26/27,ONC,Block,Day
+Thursday,5/27/27,ONC,Block,Day
+Friday,5/28/27,ONC,Block,Day
+Saturday,5/29/27,NS,Weekend,Day
+Sunday,5/30/27,NS,Weekend,Day
+Monday,5/31/27,-,Off,Day
+Tuesday,6/1/27,ONC,Block,Day
+Wednesday,6/2/27,ONC,Block,Day
+Thursday,6/3/27,ONC,Block,Day
+Friday,6/4/27,ONC,Block,Day
+Saturday,6/5/27,LIJ,Weekend,Night
+Sunday,6/6/27,-,Off,Day
+Monday,6/7/27,ONC,Block,Day
+Tuesday,6/8/27,ONC,Block,Day
+Wednesday,6/9/27,ONC,Block,Day
+Thursday,6/10/27,ONC,Block,Day
+Friday,6/11/27,ONC,Block,Day
+Saturday,6/12/27,-,Off,Day
+Sunday,6/13/27,-,Off,Day

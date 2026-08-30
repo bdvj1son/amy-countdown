@@ -1,0 +1,734 @@
+<title>Amy's Countdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..800,50,1&family=DM+Sans:opsz,wght@9..40,400..700&display=swap">
+
+<style>
+:root{
+  --bg:#FBF5F6;
+  --surface:#FFFFFF;
+  --surface-2:#F7EFF2;
+  --ink:#3A2E3F;
+  --ink-soft:#786A80;
+  --ink-faint:#A99BAE;
+  --line:#EBDFE5;
+  --rose:#D94F70;
+  --rose-wash:#FBEAEE;
+  --apricot:#D97F3C;
+  --apricot-wash:#FAEBDD;
+  --peri:#6360C4;
+  --peri-wash:#E9E8FA;
+  --sage:#3F8A72;
+  --sage-wash:#E3F1EC;
+  --shadow:0 1px 2px rgba(58,46,63,.05), 0 8px 24px -12px rgba(58,46,63,.16);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#171220;
+    --surface:#211A2C;
+    --surface-2:#2A2138;
+    --ink:#F3EAEF;
+    --ink-soft:#B6A6BE;
+    --ink-faint:#7E6E88;
+    --line:#342940;
+    --rose:#F58098;
+    --rose-wash:#3A2130;
+    --apricot:#F0A365;
+    --apricot-wash:#3A2A1E;
+    --peri:#9E9AEC;
+    --peri-wash:#262351;
+    --sage:#6FC0A3;
+    --sage-wash:#1C3830;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171220;
+  --surface:#211A2C;
+  --surface-2:#2A2138;
+  --ink:#F3EAEF;
+  --ink-soft:#B6A6BE;
+  --ink-faint:#7E6E88;
+  --line:#342940;
+  --rose:#F58098;
+  --rose-wash:#3A2130;
+  --apricot:#F0A365;
+  --apricot-wash:#3A2A1E;
+  --peri:#9E9AEC;
+  --peri-wash:#262351;
+  --sage:#6FC0A3;
+  --sage-wash:#1C3830;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"DM Sans","Segoe UI",system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:460px;
+  margin:0 auto;
+  padding:28px 20px 56px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* ---------- shared card ---------- */
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+.eyebrow{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin:0 0 10px;
+}
+
+/* ---------- masthead ---------- */
+.masthead{text-align:center;display:flex;flex-direction:column;gap:2px;padding-top:4px;}
+.masthead .weekday{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:34px;
+  font-weight:600;
+  line-height:1.05;
+  margin:0;
+  text-wrap:balance;
+}
+.masthead .fulldate{
+  font-size:14px;
+  color:var(--ink-soft);
+  font-variant-numeric:tabular-nums;
+  margin:0;
+}
+.masthead .clock{
+  font-size:12px;
+  color:var(--ink-faint);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.04em;
+  margin:2px 0 0;
+}
+
+/* ---------- now / status ---------- */
+.now{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  border-radius:20px;
+  padding:18px 20px;
+  border:1px solid var(--line);
+  background:var(--surface);
+  box-shadow:var(--shadow);
+}
+.now.is-day{background:var(--apricot-wash);border-color:transparent;}
+.now.is-night{background:var(--peri-wash);border-color:transparent;}
+.now.is-free{background:var(--sage-wash);border-color:transparent;}
+.orb{
+  flex:0 0 auto;
+  width:46px;height:46px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--surface);
+}
+.orb svg{width:24px;height:24px;display:block;}
+.now-text{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.now-label{
+  font-size:11px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+.now-head{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:21px;font-weight:600;line-height:1.2;
+}
+.now-sub{font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+
+/* ---------- block ---------- */
+.block-top{display:flex;align-items:center;gap:16px;}
+.ring{flex:0 0 auto;width:72px;height:72px;transform:rotate(-90deg);}
+.ring circle{fill:none;stroke-width:8;stroke-linecap:round;}
+.ring .track{stroke:var(--surface-2);}
+.ring .fill{stroke:var(--rose);transition:stroke-dashoffset .6s ease;}
+.ring-wrap{position:relative;flex:0 0 auto;}
+.ring-pct{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;
+  font-family:"Fraunces",Georgia,serif;
+}
+.block-meta{display:flex;flex-direction:column;gap:3px;min-width:0;}
+.block-name{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:24px;font-weight:600;line-height:1.15;text-wrap:balance;
+}
+.block-dates{font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+.block-left{font-size:14px;color:var(--ink);}
+.block-left b{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:19px;font-weight:700;color:var(--rose);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ---------- countdowns ---------- */
+.count-grid{display:flex;flex-direction:column;gap:14px;}
+.count{
+  border-radius:20px;padding:18px 20px;
+  border:1px solid var(--line);
+  background:var(--surface);
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:8px;
+}
+.count.free{background:var(--sage-wash);border-color:transparent;}
+.count-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+.count-title{
+  font-size:11px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+.count-when{font-size:12px;color:var(--ink-faint);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.digits{
+  display:flex;align-items:baseline;gap:9px;
+  font-family:"Fraunces",Georgia,serif;
+  font-variant-numeric:tabular-nums;
+  color:var(--rose);
+}
+.count.vacay .digits{color:var(--peri);}
+.count.free .digits{color:var(--sage);}
+.digit-group{display:flex;align-items:baseline;gap:2px;}
+.digit-group .n{font-size:36px;font-weight:700;line-height:1;letter-spacing:-.02em;}
+.digit-group .u{
+  font-family:"DM Sans",sans-serif;
+  font-size:12px;font-weight:700;color:var(--ink-soft);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.count-note{font-size:13px;color:var(--ink-soft);}
+
+/* ---------- 14 day strip ---------- */
+.strip{display:flex;gap:5px;justify-content:space-between;}
+.d{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;}
+.d-letter{font-size:9px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;}
+.d-num{font-size:10px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+.pill{
+  width:100%;max-width:18px;height:42px;border-radius:9px;
+  overflow:hidden;display:flex;flex-direction:column;
+  background:var(--surface-2);
+}
+.pill span{display:block;flex:1 1 50%;}
+.pill .on-day{background:var(--apricot);}
+.pill .on-night{background:var(--peri);}
+.pill .vac{background:var(--sage);}
+.d.today .d-letter,.d.today .d-num{color:var(--rose);font-weight:700;}
+.d.today .pill{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--rose);}
+
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;}
+.legend i{
+  width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:5px;
+  vertical-align:baseline;
+}
+.legend span{font-size:11px;color:var(--ink-soft);white-space:nowrap;}
+
+/* ---------- tallies ---------- */
+.tally-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tally{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:16px;padding:14px;
+  display:flex;flex-direction:column;gap:2px;
+  border-left:3px solid var(--line);
+}
+.tally.day{border-left-color:var(--apricot);}
+.tally.wknd-day{border-left-color:var(--apricot);}
+.tally.wknd-night{border-left-color:var(--peri);}
+.tally.nf{border-left-color:var(--peri);}
+.tally .n{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:30px;font-weight:700;line-height:1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+}
+.tally .l{font-size:11.5px;color:var(--ink-soft);line-height:1.3;}
+.tally.total{
+  grid-column:1 / -1;
+  background:var(--rose-wash);
+  border-color:transparent;border-left-color:var(--rose);
+  flex-direction:row;align-items:center;justify-content:space-between;
+}
+.tally.total .n{font-size:38px;color:var(--rose);}
+.tally.total .l{font-size:13px;text-align:right;max-width:11em;}
+
+.foot{
+  text-align:center;font-size:11px;color:var(--ink-faint);
+  padding-top:4px;line-height:1.6;
+}
+
+@media (max-width:360px){
+  .digit-group .n{font-size:30px;}
+  .pill{height:36px;}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important;}
+}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px;border-radius:6px;}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="weekday" id="weekday">&nbsp;</p>
+    <p class="fulldate" id="fulldate">&nbsp;</p>
+    <p class="clock" id="clock">&nbsp;</p>
+  </header>
+
+  <section class="now" id="nowCard">
+    <div class="orb" id="orb"></div>
+    <div class="now-text">
+      <div class="now-label" id="nowLabel">Right now</div>
+      <div class="now-head" id="nowHead">&nbsp;</div>
+      <div class="now-sub" id="nowSub">&nbsp;</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <p class="eyebrow">Current block</p>
+    <div class="block-top">
+      <div class="ring-wrap">
+        <svg class="ring" viewBox="0 0 72 72" aria-hidden="true">
+          <circle class="track" cx="36" cy="36" r="30"></circle>
+          <circle class="fill" id="ringFill" cx="36" cy="36" r="30"></circle>
+        </svg>
+        <div class="ring-pct" id="ringPct">0%</div>
+      </div>
+      <div class="block-meta">
+        <div class="block-name" id="blockName">&nbsp;</div>
+        <div class="block-dates" id="blockDates">&nbsp;</div>
+        <div class="block-left" id="blockLeft">&nbsp;</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="count-grid">
+    <section class="count" id="offCard">
+      <div class="count-head">
+        <span class="count-title" id="offTitle">Next day off</span>
+        <span class="count-when" id="offWhen"></span>
+      </div>
+      <div class="digits" id="offDigits"></div>
+      <div class="count-note" id="offNote"></div>
+    </section>
+
+    <section class="count vacay" id="vacCard">
+      <div class="count-head">
+        <span class="count-title" id="vacTitle">Next vacation</span>
+        <span class="count-when" id="vacWhen"></span>
+      </div>
+      <div class="digits" id="vacDigits"></div>
+      <div class="count-note" id="vacNote"></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <p class="eyebrow">Next two weeks</p>
+    <div class="strip" id="strip"></div>
+    <div class="legend">
+      <span><i style="background:var(--apricot)"></i>Day shift</span>
+      <span><i style="background:var(--peri)"></i>Night shift</span>
+      <span><i style="background:var(--sage)"></i>Vacation</span>
+      <span><i style="background:var(--surface-2)"></i>Free</span>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow" style="padding-left:2px">Shifts remaining</p>
+    <div class="tally-grid">
+      <div class="tally day"><span class="n" id="tBlockDay">–</span><span class="l">Block day shifts</span></div>
+      <div class="tally nf"><span class="n" id="tBlockNight">–</span><span class="l">Night&nbsp;float nights</span></div>
+      <div class="tally wknd-day"><span class="n" id="tWkDay">–</span><span class="l">Weekend day shifts</span></div>
+      <div class="tally wknd-night"><span class="n" id="tWkNight">–</span><span class="l">Weekend overnights</span></div>
+      <div class="tally total"><span class="n" id="tAll">–</span><span class="l">shifts left until 6/13/27</span></div>
+    </div>
+  </section>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- schedule data ----------------
+     One character per day, starting 8/30/2026.
+     Each char indexes COMBOS below. Generated from the CSV. */
+  var SEQ = "AAAAAABAAAAAABAAAAAABAAAAAABAAAAAACCDDDDDEEEEEEEEEDDDDDCCFFDDDGGHHHHHCCHHHHHCCHHHHHCCHHHCHICHHHHHCJJJJJJBJJJJJJBJJJJJJBJJJJJJCCKKKKKLLKKKKKEEEEEEEEEKKKKKLLKKKKKMCNNNNNMCGNNNNCCNNNNNCCNNNNNLLOOOOOMCOOOOOICOOOOEEEEEEEEEEOOOOOLLPPPPPCCPPPPPLLPPPPPMCPPPPPCCQQQQQCCQQQQQCCQQQQQGGCQQQQICQQQQQCC";
+
+  var COMBOS = [
+    ["LIJ NF",  "Block",   "Night"],  // A
+    ["-",       "Off",     "Night"],  // B
+    ["-",       "Off",     "Day"],    // C
+    ["Clinic",  "Block",   "Day"],    // D
+    ["Vacation","Off",     "Day"],    // E
+    ["Conference","Off",   "Day"],    // F
+    ["NS",      "Weekend", "Day"],    // G
+    ["NS GYN",  "Block",   "Day"],    // H
+    ["LIJ",     "Weekend", "Night"],  // I
+    ["NS NF",   "Block",   "Night"],  // J
+    ["SClinic", "Block",   "Day"],    // K
+    ["LIJ",     "Weekend", "Day"],    // L
+    ["NS",      "Weekend", "Night"],  // M
+    ["LIJ GYN", "Block",   "Day"],    // N
+    ["Surgery", "Block",   "Day"],    // O
+    ["LIJ L&D", "Block",   "Day"],    // P
+    ["ONC",     "Block",   "Day"]     // Q
+  ];
+
+  /* Friendlier names for the block header */
+  var PRETTY = {
+    "LIJ NF":"LIJ Night Float", "NS NF":"NS Night Float",
+    "NS GYN":"NS Gynecology",   "LIJ GYN":"LIJ Gynecology",
+    "LIJ L&D":"LIJ Labor & Delivery", "ONC":"Oncology",
+    "SClinic":"Clinic (S)",     "Clinic":"Clinic",
+    "Surgery":"Surgery",        "NS":"North Shore", "LIJ":"LIJ"
+  };
+
+  var START = new Date(2026, 7, 30, 0, 0, 0, 0);   // Aug 30 2026
+  var N = SEQ.length;
+  var DAYMS = 86400000;
+
+  function rec(i){
+    var c = COMBOS[SEQ.charCodeAt(i) - 65];
+    return { shift:c[0], type:c[1], time:c[2], idx:i };
+  }
+  function dateOf(i){
+    return new Date(START.getFullYear(), START.getMonth(), START.getDate() + i);
+  }
+  function midnight(d){
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+  function idxOf(d){
+    return Math.round((midnight(d) - START) / DAYMS);
+  }
+  function worked(i){ return rec(i).type !== "Off"; }
+
+  /* Day shift: D 06:00 -> D 18:00.  Night shift: D 18:00 -> D+1 06:00 */
+  function shiftStart(i){
+    var d = dateOf(i);
+    d.setHours(rec(i).time === "Night" ? 18 : 6, 0, 0, 0);
+    return d;
+  }
+  function shiftEnd(i){
+    var r = rec(i), d = dateOf(i);
+    if(r.time === "Night"){ d.setDate(d.getDate() + 1); d.setHours(6,0,0,0); }
+    else { d.setHours(18,0,0,0); }
+    return d;
+  }
+
+  /* Which shift, if any, is she inside right now? */
+  function activeShift(now){
+    var t = idxOf(now);
+    for(var k = t - 1; k <= t; k++){
+      if(k < 0 || k >= N || !worked(k)) continue;
+      if(now >= shiftStart(k) && now < shiftEnd(k)) return k;
+    }
+    return -1;
+  }
+
+  /* The moment she walks out before off-day i begins */
+  function freedomStart(i){
+    var k = i - 1;
+    while(k >= 0 && !worked(k)) k--;
+    if(k < 0) return dateOf(0);
+    return shiftEnd(k);
+  }
+
+  /* Next shift that has not started yet */
+  function nextShiftIdx(now){
+    for(var i = Math.max(0, idxOf(now)); i < N; i++){
+      if(worked(i) && shiftStart(i) > now) return i;
+    }
+    return -1;
+  }
+
+  function countRemaining(now, pred){
+    var c = 0;
+    for(var i = 0; i < N; i++){
+      if(worked(i) && pred(rec(i)) && now < shiftEnd(i)) c++;
+    }
+    return c;
+  }
+
+  /* Contiguous same-rotation Block spans (off days inside a span are kept) */
+  var BLOCKS = (function(){
+    var out = [], cur = null;
+    for(var i = 0; i < N; i++){
+      var r = rec(i);
+      if(r.type !== "Block") continue;
+      if(cur && cur.shift === r.shift){ cur.end = i; }
+      else { if(cur) out.push(cur); cur = { shift:r.shift, start:i, end:i }; }
+    }
+    if(cur) out.push(cur);
+    return out;
+  })();
+
+  function blockFor(t){
+    for(var i = 0; i < BLOCKS.length; i++){
+      if(t >= BLOCKS[i].start && t <= BLOCKS[i].end) return { b:BLOCKS[i], upcoming:false };
+    }
+    for(var j = 0; j < BLOCKS.length; j++){
+      if(BLOCKS[j].start > t) return { b:BLOCKS[j], upcoming:true };
+    }
+    return null;
+  }
+
+  /* ---------------- formatting ---------------- */
+  var DAYS  = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var MONS  = ["January","February","March","April","May","June","July",
+               "August","September","October","November","December"];
+
+  function fmtShort(d){ return (d.getMonth()+1) + "/" + d.getDate(); }
+  function fmtMed(d){ return DAYS[d.getDay()].slice(0,3) + " " + (d.getMonth()+1) + "/" + d.getDate(); }
+  function fmtClock(d){
+    var h = d.getHours(), m = d.getMinutes(), ap = h < 12 ? "am" : "pm";
+    h = h % 12; if(h === 0) h = 12;
+    return h + ":" + (m < 10 ? "0" : "") + m + ap;
+  }
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+
+  function digitsHTML(ms, color){
+    if(ms < 0) ms = 0;
+    var s = Math.floor(ms / 1000);
+    var d = Math.floor(s / 86400); s -= d * 86400;
+    var h = Math.floor(s / 3600);  s -= h * 3600;
+    var m = Math.floor(s / 60);    s -= m * 60;
+    var parts = [];
+    if(d > 0) parts.push([d, d === 1 ? "day" : "days"]);
+    if(d > 0 || h > 0) parts.push([h, "hr"]);
+    parts.push([m, "min"]);
+    if(d === 0) parts.push([pad(s), "sec"]);
+    return parts.map(function(p){
+      return '<span class="digit-group"><span class="n">' + p[0] +
+             '</span><span class="u">' + p[1] + '</span></span>';
+    }).join("");
+  }
+
+  /* ---------------- icons ---------------- */
+  function sunSVG(c){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" ' +
+      'stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/>' +
+      '<path d="M12 2.6v2M12 19.4v2M2.6 12h2M19.4 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M18.6 5.4l-1.4 1.4M6.8 17.2l-1.4 1.4"/></svg>';
+  }
+  function moonSVG(c){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M20 14.2A8.4 8.4 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2z"/></svg>';
+  }
+  function heartSVG(c){
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="' + c + '" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M12 20.3l-7.1-7.1a4.3 4.3 0 0 1 6.1-6.1l1 1 1-1a4.3 4.3 0 0 1 6.1 6.1z"/></svg>';
+  }
+
+  /* ---------------- render ---------------- */
+  var $ = function(id){ return document.getElementById(id); };
+
+  function setRing(pct){
+    var circ = 2 * Math.PI * 30, f = $("ringFill");
+    f.style.strokeDasharray  = circ;
+    f.style.strokeDashoffset = circ * (1 - pct / 100);
+    $("ringPct").textContent = pct + "%";
+  }
+
+  function render(){
+    var now = new Date();
+    var t = idxOf(now);
+
+    /* ---- masthead ---- */
+    $("weekday").textContent  = DAYS[now.getDay()];
+    $("fulldate").textContent = MONS[now.getMonth()] + " " + now.getDate() + ", " + now.getFullYear();
+    $("clock").textContent    = fmtClock(now);
+
+    /* Past the end of the schedule */
+    if(t >= N){
+      $("nowCard").className = "now is-free";
+      $("orb").innerHTML = heartSVG("var(--sage)");
+      $("nowHead").textContent = "The schedule's done";
+      $("nowSub").textContent  = "Every shift on this calendar is behind her.";
+      $("nowLabel").textContent = "Right now";
+      return;
+    }
+    if(t < 0) t = 0;
+
+    var act  = activeShift(now);
+    var cur  = rec(t);
+    var isNF = cur.type === "Block" && cur.time === "Night";
+
+    /* ---- right now ---- */
+    var card = $("nowCard"), orb = $("orb");
+    if(act >= 0){
+      var ar = rec(act);
+      var night = ar.time === "Night";
+      card.className = "now " + (night ? "is-night" : "is-day");
+      orb.innerHTML  = night ? moonSVG("var(--peri)") : sunSVG("var(--apricot)");
+      $("nowLabel").textContent = night ? "On nights" : "On shift";
+      $("nowHead").textContent  = PRETTY[ar.shift] || ar.shift;
+      var endAt = shiftEnd(act);
+      var sameDay = midnight(endAt).getTime() === midnight(now).getTime();
+      $("nowSub").textContent   = "Until " + fmtClock(endAt) +
+        (night ? (sameDay ? " this morning" : " tomorrow morning") : " tonight");
+    } else {
+      var hr = now.getHours();
+      var sleeping = isNF && hr >= 7 && hr < 16;
+      card.className = "now is-free";
+      var onVac = cur.shift === "Vacation";
+      orb.innerHTML = sleeping ? moonSVG("var(--peri)") : heartSVG("var(--sage)");
+      $("nowLabel").textContent = sleeping ? "Between nights" : "Right now";
+      $("nowHead").textContent  = sleeping ? "Sleeping it off"
+                                : onVac    ? "On vacation"
+                                : cur.shift === "Conference" ? "At a conference"
+                                : "Off duty";
+      var nx = nextShiftIdx(now);
+      $("nowSub").textContent = nx < 0 ? "Nothing left on the calendar."
+        : "Back on " + fmtMed(dateOf(nx)) + " at " + fmtClock(shiftStart(nx));
+    }
+
+    /* ---- current block ---- */
+    var bi = blockFor(t);
+    if(bi){
+      var b = bi.b;
+      var name = PRETTY[b.shift] || b.shift;
+      $("blockName").textContent  = name;
+      $("blockDates").textContent = fmtShort(dateOf(b.start)) + " – " + fmtShort(dateOf(b.end));
+
+      var total = 0, left = 0;
+      for(var i = b.start; i <= b.end; i++){
+        if(!worked(i)) continue;
+        total++;
+        if(now < shiftEnd(i)) left++;
+      }
+      var done = total - left;
+      var pct  = total ? Math.round(done / total * 100) : 0;
+
+      if(bi.upcoming){
+        var away = b.start - t;
+        $("blockLeft").innerHTML = "<b>" + total + "</b> shifts, starting in " +
+          away + (away === 1 ? " day" : " days");
+        pct = 0;
+      } else {
+        $("blockLeft").innerHTML = "<b>" + left + "</b> " +
+          (left === 1 ? "shift left in this block" : "shifts left in this block");
+      }
+      setRing(pct);
+    } else {
+      /* Past the last block */
+      $("blockName").textContent  = "All blocks done";
+      $("blockDates").textContent = "8/30/26 – 6/11/27";
+      $("blockLeft").innerHTML    = "Every rotation on this calendar is behind her.";
+      setRing(100);
+    }
+
+    /* ---- next day off ---- */
+    var offIdx = -1;
+    for(var j = t; j < N; j++){ if(!worked(j)){ offIdx = j; break; } }
+    var offCard = $("offCard");
+    if(offIdx < 0){
+      offCard.className = "count";
+      $("offDigits").innerHTML = '<span class="digit-group"><span class="n">—</span></span>';
+      $("offNote").textContent = "No days off left on the calendar.";
+      $("offWhen").textContent = "";
+    } else {
+      var free = freedomStart(offIdx);
+      var offRec = rec(offIdx);
+      var nightOnly = offRec.time === "Night";
+      $("offWhen").textContent = fmtMed(dateOf(offIdx));
+      if(free <= now){
+        /* She is already free — count the free time she has left */
+        offCard.className = "count free";
+        var nx2 = nextShiftIdx(now);
+        $("offTitle").textContent = "Off right now";
+        $("offDigits").innerHTML  = nx2 < 0 ? '<span class="digit-group"><span class="n">∞</span></span>'
+                                            : digitsHTML(shiftStart(nx2) - now);
+        $("offNote").textContent  = nx2 < 0 ? "Free from here on."
+          : "of freedom left before " + (rec(nx2).time === "Night" ? "nights" : "her next shift") + ".";
+      } else {
+        offCard.className = "count";
+        $("offTitle").textContent = nightOnly ? "Next night off" : "Next day off";
+        $("offDigits").innerHTML  = digitsHTML(free - now);
+        $("offNote").textContent  = nightOnly
+          ? "Walks out " + fmtClock(free) + " — she stays on nights, so it's the evening that's really hers."
+          : "Walks out " + fmtMed(free) + " at " + fmtClock(free) + ".";
+      }
+    }
+
+    /* ---- next vacation ---- */
+    var vacIdx = -1;
+    for(var v = t; v < N; v++){ if(rec(v).shift === "Vacation"){ vacIdx = v; break; } }
+    var vacCard = $("vacCard");
+    if(vacIdx < 0){
+      vacCard.className = "count vacay";
+      $("vacTitle").textContent = "Next vacation";
+      $("vacDigits").innerHTML  = '<span class="digit-group"><span class="n">—</span></span>';
+      $("vacNote").textContent  = "No vacation left on this schedule.";
+      $("vacWhen").textContent  = "";
+    } else {
+      var vstart = vacIdx;
+      while(vstart - 1 >= 0 && rec(vstart - 1).shift === "Vacation") vstart--;
+      var vend = vacIdx;
+      while(vend + 1 < N && rec(vend + 1).shift === "Vacation") vend++;
+      var vfree = freedomStart(vstart);
+      var vlen  = vend - vstart + 1;
+      $("vacWhen").textContent = fmtShort(dateOf(vstart)) + " – " + fmtShort(dateOf(vend));
+      if(vfree <= now && cur.shift === "Vacation"){
+        vacCard.className = "count vacay free";
+        $("vacTitle").textContent = "On vacation";
+        var endMs = dateOf(vend); endMs.setHours(24,0,0,0);
+        $("vacDigits").innerHTML = digitsHTML(endMs - now);
+        $("vacNote").textContent = "left of " + vlen + " days off together.";
+      } else {
+        vacCard.className = "count vacay";
+        $("vacTitle").textContent = "Next vacation";
+        $("vacDigits").innerHTML  = digitsHTML(vfree - now);
+        $("vacNote").textContent  = vlen + " days off, starting " + fmtMed(dateOf(vstart)) + ".";
+      }
+    }
+
+    /* ---- next two weeks ---- */
+    var strip = $("strip"), html = "";
+    for(var k = 0; k < 14; k++){
+      var di = t + k;
+      if(di >= N) break;
+      var d  = dateOf(di), r = rec(di);
+      var dayCls = "", nightCls = "";
+      if(r.type !== "Off"){
+        if(r.time === "Night") nightCls = "on-night"; else dayCls = "on-day";
+      } else if(r.shift === "Vacation"){
+        dayCls = "vac"; nightCls = "vac";
+      }
+      html += '<div class="d' + (k === 0 ? " today" : "") + '">' +
+                '<span class="d-letter">' + DAYS[d.getDay()].charAt(0) + '</span>' +
+                '<span class="pill"><span class="' + dayCls + '"></span>' +
+                '<span class="' + nightCls + '"></span></span>' +
+                '<span class="d-num">' + d.getDate() + '</span>' +
+              '</div>';
+    }
+    strip.innerHTML = html;
+
+    /* ---- tallies ---- */
+    $("tBlockDay").textContent   = countRemaining(now, function(r){ return r.type === "Block"   && r.time === "Day";   });
+    $("tBlockNight").textContent = countRemaining(now, function(r){ return r.type === "Block"   && r.time === "Night"; });
+    $("tWkDay").textContent      = countRemaining(now, function(r){ return r.type === "Weekend" && r.time === "Day";   });
+    $("tWkNight").textContent    = countRemaining(now, function(r){ return r.type === "Weekend" && r.time === "Night"; });
+    $("tAll").textContent        = countRemaining(now, function(){ return true; });
+
+    var daysLeft = N - t;
+    $("foot").textContent = daysLeft + " days on the calendar · through June 13, 2027";
+  }
+
+  render();
+  setInterval(render, 1000);
+})();
+</script>
