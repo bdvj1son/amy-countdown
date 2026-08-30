@@ -251,6 +251,28 @@ body{
 }
 .banner-note{font-size:13px;color:var(--ink-soft);line-height:1.4;}
 
+/* ---------- finished ---------- */
+.wrap.is-finished{
+  min-height:100vh;
+  min-height:100svh;
+  justify-content:center;
+  padding-top:24px;padding-bottom:24px;
+}
+.finished{
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+  text-align:center;
+  background:var(--rose-wash);
+  border-radius:24px;
+  padding:48px 26px;
+  box-shadow:var(--shadow);
+}
+.fin-emoji{font-size:60px;line-height:1;}
+.fin-title{
+  font-family:"Fraunces",Georgia,serif;
+  font-size:28px;font-weight:700;line-height:1.22;
+  color:var(--rose);margin:0;text-wrap:balance;
+}
+
 /* ---------- coming up ---------- */
 .up-list{display:flex;flex-direction:column;}
 .up{
@@ -280,8 +302,13 @@ body{
 .d-dot.blank{background:transparent;}
 
 /* ---------- 14 day strip ---------- */
-.strip{display:flex;gap:5px;justify-content:space-between;}
-.d{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;}
+.strip{display:flex;gap:5px;justify-content:flex-start;}
+/* Fixed 14-column basis (13 gaps of 5px) so a partial final week keeps the
+   same rhythm and pill size instead of stretching to fill the row. */
+.d{
+  flex:0 0 calc((100% - 65px) / 14);
+  display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;
+}
 .d-letter{font-size:9px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;}
 .d-num{font-size:10px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
 .pill{
@@ -349,13 +376,18 @@ body{
 
 <div class="wrap">
 
-  <header class="masthead">
+  <section class="finished" id="finished" style="display:none">
+    <div class="fin-emoji">🎉</div>
+    <h1 class="fin-title">Congratulations, you finished residency!</h1>
+  </section>
+
+  <header class="masthead live">
     <p class="weekday" id="weekday">&nbsp;</p>
     <p class="fulldate" id="fulldate">&nbsp;</p>
     <p class="clock" id="clock">&nbsp;</p>
   </header>
 
-  <section class="banner" id="banner" style="display:none">
+  <section class="banner live" id="banner" style="display:none">
     <div class="banner-emoji" id="bannerEmoji"></div>
     <div class="banner-text">
       <div class="banner-title" id="bannerTitle"></div>
@@ -363,7 +395,7 @@ body{
     </div>
   </section>
 
-  <section class="now" id="nowCard">
+  <section class="now live" id="nowCard">
     <div class="orb" id="orb"></div>
     <div class="now-text">
       <div class="now-label" id="nowLabel">Right now</div>
@@ -372,7 +404,7 @@ body{
     </div>
   </section>
 
-  <section class="card">
+  <section class="card live">
     <p class="eyebrow">Current block</p>
     <div class="block-top">
       <div class="ring-wrap">
@@ -390,7 +422,7 @@ body{
     </div>
   </section>
 
-  <div class="count-grid">
+  <div class="count-grid live">
     <section class="count" id="offCard">
       <div class="count-head">
         <span class="count-title" id="offTitle">Next day off</span>
@@ -411,13 +443,13 @@ body{
     </section>
   </div>
 
-  <section class="card" id="comingCard">
+  <section class="card live" id="comingCard">
     <p class="eyebrow">Coming up</p>
     <div class="up-list" id="upList"></div>
   </section>
 
-  <section class="card" id="stripCard">
-    <p class="eyebrow">Next two weeks</p>
+  <section class="card live" id="stripCard">
+    <p class="eyebrow" id="stripLabel">Next two weeks</p>
     <div class="strip" id="strip"></div>
     <div class="legend">
       <span><i style="background:var(--apricot)"></i>Day shift</span>
@@ -427,7 +459,7 @@ body{
     </div>
   </section>
 
-  <section>
+  <section class="live">
     <p class="eyebrow" style="padding-left:2px">Shifts remaining</p>
     <div class="tally-grid">
       <div class="tally day"><span class="n" id="tBlockDay">–</span><span class="l">Block day shifts</span></div>
@@ -440,7 +472,7 @@ body{
     </div>
   </section>
 
-  <p class="foot" id="foot"></p>
+  <p class="foot live" id="foot"></p>
 </div>
 
 <script>
@@ -499,7 +531,9 @@ body{
     "1/1/27":   { emoji:"🎊", title:"Happy New Year!",
                   note:"The last night float shift on the whole calendar. You walk out of 2026 and off nights." },
     "1/22/27":  { emoji:"💍", title:"Happy 3rd anniversary!",
-                  note:"Three years. Right in the middle of the staycation." }
+                  note:"Three years. Right in the middle of the staycation." },
+    "6/11/27":  { emoji:"🎉", title:"Last day of residency!",
+                  note:"The final shift on the whole calendar. Out at 6pm, and then it's done." }
   };
 
   /* Multi-day trips. Keyed by first and last day, M/D/YY. */
@@ -634,6 +668,13 @@ body{
     return c;
   }
 
+  /* The instant she walks out of the final shift on the calendar.
+     Everything after this is the congratulations screen. */
+  var DONE_AT = (function(){
+    for(var i = N - 1; i >= 0; i--){ if(worked(i)) return shiftEnd(i); }
+    return null;
+  })();
+
   /* Contiguous same-rotation Block spans (off days inside a span are kept) */
   var BLOCKS = (function(){
     var out = [], cur = null;
@@ -708,6 +749,25 @@ body{
   /* ---------------- render ---------------- */
   var $ = function(id){ return document.getElementById(id); };
 
+  /* Set the status card's colour state without clobbering its other classes
+     (assigning .className wholesale would strip the "live" marker). */
+  function setNowState(el, state){
+    el.classList.remove("is-day", "is-night", "is-free");
+    el.classList.add(state);
+  }
+
+  /* Swap the whole page between the live dashboard and the finished screen */
+  function setFinished(on){
+    var live = document.querySelectorAll(".wrap > .live");
+    for(var i = 0; i < live.length; i++){
+      live[i].style.display = on ? "none" : "";
+    }
+    $("finished").style.display = on ? "" : "none";
+    var wrap = document.querySelector(".wrap");
+    if(on) wrap.classList.add("is-finished");
+    else   wrap.classList.remove("is-finished");
+  }
+
   function setRing(pct){
     var circ = 2 * Math.PI * 30, f = $("ringFill");
     f.style.strokeDasharray  = circ;
@@ -717,52 +777,21 @@ body{
 
   function render(){
     var now = new Date();
+
+    /* Once she walks out of the final shift, the dashboard is replaced
+       entirely by the congratulations screen. */
+    if(DONE_AT && now >= DONE_AT){ setFinished(true); return; }
+    setFinished(false);
+
     var t = idxOf(now);
+    if(t < 0) t = 0;
+    if(t >= N) t = N - 1;   /* safety net; unreachable while DONE_AT is set */
 
     /* ---- masthead ---- */
     $("weekday").textContent  = DAYS[now.getDay()];
     $("fulldate").textContent = MONS[now.getMonth()] + " " + now.getDate() + ", " + now.getFullYear();
     $("clock").textContent    = fmtClock(now);
 
-    /* Past the end of the schedule — every card has to be given its
-       finished state, or it keeps whatever the previous tick rendered. */
-    if(t >= N){
-      $("nowCard").className   = "now is-free";
-      $("orb").innerHTML       = heartSVG("var(--sage)");
-      $("nowLabel").textContent = "Right now";
-      $("nowHead").textContent = "The schedule's done";
-      $("nowSub").textContent  = "Every shift on this calendar is behind you.";
-
-      $("blockName").textContent  = "All blocks done";
-      $("blockDates").textContent = "8/30/26 – 6/11/27";
-      $("blockLeft").innerHTML    = "Every rotation on this calendar is behind you.";
-      setRing(100);
-
-      $("offCard").className    = "count free";
-      $("offTitle").textContent = "Days off";
-      $("offWhen").textContent  = "";
-      $("offDigits").innerHTML  = '<span class="digit-group"><span class="n">&#8734;</span></span>';
-      $("offNote").textContent  = "Free from here on.";
-
-      $("vacCard").className    = "count vacay";
-      $("vacTitle").textContent = "Next vacation";
-      $("vacWhen").textContent  = "";
-      $("vacDigits").innerHTML  = '<span class="digit-group"><span class="n">&mdash;</span></span>';
-      $("vacDest").style.display = "none";
-      $("vacNote").textContent  = "No vacation left on this schedule.";
-
-      $("banner").style.display     = "none";
-      $("comingCard").style.display = "none";
-      $("stripCard").style.display  = "none";
-      ["tBlockDay","tBlockNight","tLijDay","tNsDay",
-       "tLijNight","tNsNight","tAll"].forEach(function(id){
-        $(id).textContent = "0";
-      });
-      $("foot").textContent = "Schedule complete · 8/30/26 – 6/13/27";
-      return;
-    }
-    $("stripCard").style.display = "";
-    if(t < 0) t = 0;
 
     var act  = activeShift(now);
     var cur  = rec(t);
@@ -784,7 +813,7 @@ body{
     if(act >= 0){
       var ar = rec(act);
       var night = ar.time === "Night";
-      card.className = "now " + (night ? "is-night" : "is-day");
+      setNowState(card, night ? "is-night" : "is-day");
       orb.innerHTML  = night ? moonSVG("var(--peri)") : sunSVG("var(--apricot)");
       $("nowLabel").textContent = night ? "On nights" : "On shift";
       $("nowHead").textContent  = PRETTY[ar.shift] || ar.shift;
@@ -795,7 +824,7 @@ body{
     } else {
       var hr = now.getHours();
       var sleeping = isNF && hr >= 7 && hr < 16;
-      card.className = "now is-free";
+      setNowState(card, "is-free");
       var onVac = cur.shift === "Vacation";
       orb.innerHTML = sleeping ? moonSVG("var(--peri)") : heartSVG("var(--sage)");
       $("nowLabel").textContent = sleeping ? "Between nights" : "Right now";
@@ -964,6 +993,10 @@ body{
               '</div>';
     }
     strip.innerHTML = html;
+    var shown = Math.min(14, N - t);
+    $("stripLabel").textContent = shown >= 14 ? "Next two weeks"
+      : shown === 1 ? "The last day"
+      : "The last " + shown + " days";
 
     /* ---- tallies ---- */
     $("tBlockDay").textContent   = countRemaining(now, function(r){ return r.type === "Block"   && r.time === "Day";   });
